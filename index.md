@@ -2,11 +2,11 @@
 layout: default
 ---
 
-Hi there! This is a walkthrough of [my GitHub](https://github.com/demery12) as well as some of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship).
+Hi there! This is a walkthrough of [my GitHub](https://github.com/demery12) as well as some of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship). The main motivation for the creation of this is to aid people considering me for a position since it is almost impossible to get a sense of my contributions to Digital Scholarship without guidance. If you are here for a different reason, I suspect this would be useful to get a sense about what Digital Scholarship does and also who I am.
 
 We will be looking at:
-- [Digital Scholarship](#DS)
-  - Global Terrorism Research Project
+- [Digital Scholarship](#ds)
+  - [Global Terrorism Research Project](#gtrp)
   - Bridge
   - Ticha
   - Beyond Penn's Treaty
@@ -16,16 +16,15 @@ We will be looking at:
 - CodingChallenges
 
 Let's get started!
+pu
+# [](#ds)Digital Scholarship
 
-# [](#DS)Digital Scholarship
+The term Digital Scholarship refers to the use of technology to aid scholarship. Our Digital Scholarship team focuses less on the actual scholarship and more on the technology side, realizing professors' and students' ideas of what technology can do for them. We are admittedly not an experienced software team, but we try our best to be making use of virtual environments, production servers on Droplet and of course Git for version control. I have played a central role on almost all of our active projects:
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
 
-## [](#header-2)Header 2
+## [](#gtrp)Global Terrorism Research Project
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
+The Global Terrorism Research Project (GTRP) is essentially a database of all public statements made by al Qaeda. Researchers have tagged each of these statements with keywords and the context in which a keyword is being used. The site was originally on Drupal and it frankly [doesn't work that well](https://ds-drupal.haverford.edu/aqsi/). I was originally tasked with starting to convert the site into a Django site and I would then hand off my progress to  summer worker. I made it further than expected and ended up adding search functionality with whoosh and filtering functionality. [Here in whoosh\_schema.py](https://github.com/HCDigitalScholarship/global-terrorism-research/blob/ee173b490ddde8aca9397e9968d9167513f7e2e9/gtr_site/management/commands/whoosh_schema.py)
 
 ### [](#header-3)Header 3
 
