@@ -2,15 +2,22 @@
 layout: default
 ---
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+Hi there! This is a walkthrough of [my GitHub](https://github.com/demery12) as well as some of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship).
 
-[Link to another page](another-page).
+We will be looking at:
+- [Digital Scholarship](#DS)
+  - Global Terrorism Research Project
+  - Bridge
+  - Ticha
+  - Beyond Penn's Treaty
+  - Quakers and Mental Health
+- BODL-Service
+- img\_exploration
+- CodingChallenges
 
-There should be whitespace between paragraphs.
+Let's get started!
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-# [](#header-1)Header 1
+# [](#DS)Digital Scholarship
 
 This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
 
