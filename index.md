@@ -7,7 +7,7 @@ Hi there! This is a walkthrough of [my GitHub](https://github.com/demery12) as w
 We will be looking at:
 - [Digital Scholarship](#ds)
   - [Global Terrorism Research Project](#gtrp)
-  - Bridge
+  - [Bridge](#bridge)
   - Ticha
   - Beyond Penn's Treaty
   - Quakers and Mental Health
@@ -22,25 +22,13 @@ pu
 The term Digital Scholarship refers to the use of technology to aid scholarship. Our Digital Scholarship team focuses less on the actual scholarship and more on the technology side, realizing professors' and students' ideas of what technology can do for them. We are admittedly not an experienced software team, but we try our best to be making use of virtual environments, production servers on Droplet and of course Git for version control. I have played a central role on almost all of our active projects:
 
 
-## [](#gtrp)Global Terrorism Research Project
+## [](#gtrp)[Global Terrorism Research Project](https://github.com/HCDigitalScholarship/global-terrorism-research/tree/e135882407ae773a7d216c4d28876d67d08575bd)
 
-The Global Terrorism Research Project (GTRP) is essentially a database of all public statements made by al Qaeda. Researchers have tagged each of these statements with keywords and the context in which a keyword is being used. The site was originally on Drupal and it frankly [doesn't work that well](https://ds-drupal.haverford.edu/aqsi/). I was originally tasked with starting to convert the site into a Django site and I would then hand off my progress to  summer worker. I made it further than expected and ended up adding search functionality with whoosh and filtering functionality. [Here in whoosh\_schema.py](https://github.com/HCDigitalScholarship/global-terrorism-research/blob/ee173b490ddde8aca9397e9968d9167513f7e2e9/gtr_site/management/commands/whoosh_schema.py)
+The Global Terrorism Research Project (GTRP) is essentially a database of all public statements made by al Qaeda. Researchers have tagged each of these statements with keywords and the context in which a keyword is being used. The site was originally on Drupal and it frankly [doesn't work that well](https://ds-drupal.haverford.edu/aqsi/). I was originally tasked with starting to convert the site into a Django site and I would then hand off my progress to  summer worker. I made it further than expected and ended up adding search functionality with whoosh and filtering functionality. [Here in whoosh\_schema.py](https://github.com/HCDigitalScholarship/global-terrorism-research/blob/e135882407ae773a7d216c4d28876d67d08575bd/gtr_site/management/commands/whoosh_schema.py) I build the appropriate search index based off of the [models](https://github.com/HCDigitalScholarship/global-terrorism-research/blob/e135882407ae773a7d216c4d28876d67d08575bd/gtr_site/models.py). In [views.py](https://github.com/HCDigitalScholarship/global-terrorism-research/blob/e135882407ae773a7d216c4d28876d67d08575bd/gtr_site/views.py) the search functions takes a post request and contructs a query for whoosh. Now I _really_ could have made this a bit more modular as I was repeatedly doing the same thing and that's actually something I'm working on now. All code at [this point](https://github.com/HCDigitalScholarship/global-terrorism-research/tree/e135882407ae773a7d216c4d28876d67d08575bd) in the project has been written by me (or automatically generated Django).
 
-### [](#header-3)Header 3
+## [](#bridge)Bridge
 
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
 ```
 
 #### [](#header-4)Header 4
