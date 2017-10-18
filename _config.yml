@@ -1,2 +1,4 @@
 name: Dylan Emery
 markdown: kramdown
+
+theme: jekyll-theme-slate
