@@ -8,7 +8,7 @@ We will be looking at:
 - [Digital Scholarship](#digital-scholarship)
   - [Global Terrorism Research Project](#global-terrorism-research-project)
   - [Bridge](#the-bridge)
-  - Ticha
+  - [Ticha](#ticha)
   - Beyond Penn's Treaty
   - Quakers and Mental Health
 - BODL-Service
@@ -29,7 +29,7 @@ All code at [this point](https://github.com/HCDigitalScholarship/global-terroris
 
 ## [](#bridge)[The Bridge](https://github.com/HCDigitalScholarship/bridge-repo/tree/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b) 
 
-The Bridge is a classical language project the generates and filters vocabulary list. You can check out [a fairly working version](http://bridge.haverford.edu/)! I started working on The Bridge in the Summer of 2016 and it was a _mess_. While I cleaned up some of that mess, I also added to it; this was definitely a big learning experience for me. When I started working on this there was a stupidly complicated procedure for updating the database involving hand manipulation of spreadsheets as well as some scripts. I joined all this together so that the spreadsheet could be updated with a single manage.py command (manage.py is what Django uses for various management purposes, I extended it). I then exented the Django admin site so that the updating process is even easier. The two scripts that do this are [update\_master.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/update_master.py) and [update\_page.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/update_page.py) the latter of which makes use of of [text\_import.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/text_import.py) which was primarly written by another student, but I did have to modify as there were some significant bugs. I would actually categorize most of my work on The Bridge as bug-finding and fixing. The other tangible things I did were in views.py and main.js. Before I draw your atention to specfics of my contributions I'd like to disclaim that I didn't write most of these files and these files exemplify my claim that The Bridge is a mess. One of the interesting and particurarly sloppy additions is all the "comment this out for production" things. We were running into this mysterious "Too many SQL variables" problem and it was really stumping us. It turns out that you can't make requests that are too big (>100). So you have to chunk your request. I highlight this solution below:
+The Bridge is a classical language project the generates and filters vocabulary list from selected texts. You can check out [a fairly working version](http://bridge.haverford.edu/)! I started working on The Bridge in the Summer of 2016 and it was a _mess_. While I cleaned up some of that mess, I also added to it; this was definitely a big learning experience for me. When I started working on this there was a stupidly complicated procedure for updating the database involving hand manipulation of spreadsheets as well as some scripts. I joined all this together so that the spreadsheet could be updated with a single manage.py command (manage.py is what Django uses for various management purposes, I extended it). I then exented the Django admin site so that the updating process is even easier. The two scripts that do this are [update\_master.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/update_master.py) and [update\_page.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/update_page.py) the latter of which makes use of of [text\_import.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/text_import.py) which was primarly written by another student, but I did have to modify as there were some significant bugs. I would actually categorize most of my work on The Bridge as bug-finding and fixing. The other tangible things I did were in views.py and main.js. Before I draw your atention to specfics of my contributions I'd like to disclaim that I didn't write most of these files and these files exemplify my claim that The Bridge is a mess. One of interesting and particurarly sloppy additions to [views.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/d0b1efa569d8f7e1a2c61e114b0db4038ef6857b/new_bridge/views.py) is all the "comment this out for production" mess. We were running into this mysterious "Too many SQL variables" problem and it was really stumping us. It turns out that you can't make requests that are too big (>100) when you are using SQLite, but it is fine for MySQL. So we had to chunk our requests whenever we were using SQLite. I highlight this solution below:
 
 ```
  #COMMENT THIS OUT FOR PRODUCTION
@@ -48,14 +48,85 @@ The Bridge is a classical language project the generates and filters vocabulary 
 +            #        word__in=list_word_ids[index-100:index],text_name=text).values('word')))
 +            #COMMENT ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
+Now, it would have been _much_ better to have some constant that we could flip to turn on SQLite mode and then an if statement to do whatever was appropriate. But as I said, this was a learning experience.
+
+I also generate the data in views for a new feature; a count of the number appearance of each word in the text and displaying the first appearance of that word (we actually weren't allowed to display all the appearances for copyright reasons). I also added a local definition feature; some words have definitions specific to a text. I check to see if a word/text has local definitions and default to displaying those if it does. We were also generating a lot of duplicate words that we didn't want, which in Python is an easy ```list(set(original_list)``` to fix.
+
+[main.js](https://github.com/HCDigitalScholarship/bridge-repo/blob/d0b1efa569d8f7e1a2c61e114b0db4038ef6857b/static/main.js) is a very large JavaScript file that really should be several smaller JavaScript files; it was large when I got to it, but I added my share of junk to it (if you look there are a lot of commented out print statements that include "Dylan". Those were my bad.) I also fixed a bug where the slideout panel was turning invisible instead of sliding back in. This would still be clickable so it would block what you thought you were clicking. I also added the ability to export the vocab list, to a tsv and to a pdf. I also fixed a bug where not enough words were showing up, because some of the data had multiple parts of speech. I'll highlight this part, I am particurarly proud of this one:
+```
+/* Given array of word categories, returns an array of relevant wordTable objects.
+ * wordTable objects are retrieved from word category arrays in words_data.*/
+function filterWordData(pos_list) {
+    var words_data_filtered = [];
+    var words_data_keys = Object.getOwnPropertyNames(words_data);
+    /* So needed to do is identify 'Adverb, preposition' as 'adverb'
+     * and 'preposition'. I made a dictionary (pos_dictionary) with a
+     * list of everything it should add when it finds that word.
+     * So 'Adverb' will be:
+     * 'Adverb' : ['Adverb', 'Adverb, Conjunction', 'Adverb, Preposition'] etc.
+     */
+
+    // Intialize a dictionary with all the words we want to add
+    var pos_dictionary = {};
+    for (var i=0; i<pos_list.length; i++){
+	var pos = pos_list[i];
+	pos_dictionary[pos]= [];
+		
+    }
+
+    // Now add (hopefully) all pos from the data appropriately
+    for (var i=0; i<words_data_keys.length; i++) {
+	var key = words_data_keys[i];
+        // A regex that matches 1 or more commas and any number of spaces
+        prop_list = key.split(/,+\s*/);
+	for (var j=0; j<prop_list.length; j++){
+           var prop = prop_list[j];
+	   if(pos_dictionary[prop] != undefined){
+	      pos_dictionary[prop].push(key);
+	      //Always group Adj-1 and Adj-2
+              if(prop == 'Adjective_1'){
+                 pos_dictionary['Adjective_1'].push('Adjective_2');
+		 //pos_dictionary['Adjective_1'].push('Adjective_');
+              }
+           }
+	}
+    }
+
+    // pos_dictionary now complete
+
+    var modified = {}; // modified: tracks the things we have already changed so we don't double add
+    for (var i=0; i<words_data_keys.length; i++) {
+        var key = words_data_keys[i];
+        var key_index = pos_list.indexOf(key);
+	if (key_index>=0) {
+	    for(var j=0; j<pos_dictionary[key].length; j++){
+	      var prop = pos_dictionary[key][j];
+	      if (modified[prop] == undefined){
+	        modified[prop] = true;
+                words_data_filtered = words_data_filtered.concat(words_data[prop]);
+	      }
+
+	    }
+	   // We used to removed items instead of marking them as modified
+	   // but then you couldn't properly view the list in console
+	   // so I switched it
+           // pos_list.splice(key_index,1); //rm that key from pos_list
+        }
+    }
+    console.log(words_data_filtered, 'Words returned by filter');
+    console.log(typeof words_data_filtered);
+    return words_data_filtered;
+}
+```
+
+This was a more recent fix, so it is better commentented and coded, but that's not the reason I'm proud of it. If you have been looking at any of the codebase, or just reading this, you should have an idea that The Bridge is a little tricky to navigate. I was able to find an fix this error when the only symptom was a couple words not appearing and that is what I am proud of.
 
 
-[Here is the diff that best encapsulates my contributions](https://github.com/HCDigitalScholarship/bridge-repo/compare/e8550975f31005be66fc5837b5c0a2884448a34e...d0b1efa569d8f7e1a2c61e114b0db4038ef6857b). There were some other people working on it, but most changes were me. It also might not actually be that useful, but I'll throw it at you anyway.
+To summarize [here is the diff that best encapsulates my contributions](https://github.com/HCDigitalScholarship/bridge-repo/compare/e8550975f31005be66fc5837b5c0a2884448a34e...d0b1efa569d8f7e1a2c61e114b0db4038ef6857b). There were some other people working on it, but most changes in this timeframe were me. It also might not actually be that useful, but I'll throw it at you anyway.
 
+## [Ticha]()
 
-
-
-https://github.com/HCDigitalScholarship/bridge-repo/compare/e8550975f31005be66fc5837b5c0a2884448a34e...d0b1efa569d8f7e1a2c61e114b0db4038ef6857b#diff-41ba398486ac4eb7fb1400b740cba839
+Ticha is a linguistics project that focuses on the Colonial Zapotec Language. You can check out [the site](https://ticha.haverford.edu/en/) it's one of my favorites. I didn't contribute to this one as much as the previous, but I did one huge part of it. It was also my crowning achievment in messy code.
 
 ```
 
