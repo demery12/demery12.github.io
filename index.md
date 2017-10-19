@@ -9,8 +9,8 @@ We will be looking at:
   - [Global Terrorism Research Project](#global-terrorism-research-project)
   - [Bridge](#the-bridge)
   - [Ticha](#ticha)
-  - Beyond Penn's Treaty
-  - Quakers and Mental Health
+  - [Beyond Penn's Treaty](#beyond-penns-treaty)
+  - [Quakers and Mental Health](#quakers-and-mental-health)
 - BODL-Service
 - img\_exploration
 - CodingChallenges
@@ -132,7 +132,104 @@ Ticha is a linguistics project that focuses on the Colonial Zapotec Language. Yo
 
 I am combining these two because I worked on them a long time ago. [Beyond Penn's Treaty](https://pennstreaty.haverford.edu/) was the first project I really worked on and the first time I made a Django importer. That one took me way longer than it does now. We were trying to use a plugin that wasn't working which it turns out is much more difficult to resolve than just writing your own importer. This was also my first time working with Django and I remember having some trouble setting up relational fields in the database (well really in models with Django).  I'll link the repository and here is [a big commit](https://github.com/HCDigitalScholarship/QI/commit/83f5b5508bc8865e4656a0f4aa242ff08eb90bd0) from me. These are both things you can probably skip, at this point I am just shooting for completeness, but if you do look at that big commit, you can see in admin.py all the importing stuff I did (in a really bad way), and generate.py is another parser I wrote, this one a little tidier and much simpler, also converting XML to HTML, and again more converting in new\_XML\_to\_HTML.py (I didn't fully write this one, but I made a lot of changes/got it properly working).
 
-## Quakers and Mental Health
+## [Quakers and Mental Health]
+
+I _thought_ my greatest contribution to this project was getting rid of a carousel but [apparently that change didn't stick](http://qmh.haverford.edu/occu/#row10). I also made an importer, as I will do, and really tidied up the way the Django admin was looking, by changing the way models were displayed and adding some built in django filtering features. For this importer I was mostly able to get things working with the Django-import-export module, but there was one model I had to do a workaround for. This is for the field "Patient Entry" which needs to link to a patient foreign key, but sometimes there were brand new people in the patient entry spread sheet. If I recall correctly, there were also tons of repeated entries with some having more information than others. I used date to distinguish entries for the same person, and then took the one with the most information. The repository is private (probably for copy-righted data reasons), but I can share the code snippet I am referencing:
+
+```
+def import_obj(self, obj, data, dry_run):
+		if "patient_Info" not in data:
+			first_name = data['first_name']
+			last_name = data['last_name']
+			#print "Here is the data for:",first_name,last_name
+			#print data,"\n"
+			person_list = Person.objects.filter(first_name=first_name,last_name=last_name)
+			if len(person_list) == 0:
+				print "Need to make a new person!"
+				patient =  RoleType.objects.get(role='Patient')
+				new_person = Person(
+									first_name=first_name,
+									last_name=last_name,
+									alias=data['alias'],
+									birth=data['rough_year_of_birth'],
+									death=data["date_of_death"],
+									gender=data['gender'],
+									role=patient
+									) #one day add birthplace as hometown?
+				print "Made new person",first_name,last_name
+				new_person.save()
+				print new_person.id
+				data['patient_Info']=new_person.id
+				person_id=new_person.id
+			elif len(person_list) == 1:
+				print "Yay found a unique pre-existing person"
+				person_id=person_list[0].id
+				data['patient_Info']=person_id
+				# Might need to update this so that it updates more things and only does it if the thing already there is blank
+				update_person = Person.objects.get(id=person_id)
+				update_person.alias=data['alias']
+				update_person.save()
+				print "Updated:", update_person
+			else:
+				print "Names aren't unique, inconvience"
+				for name in person_list:
+					if name.role.role == 'Patient':
+						person_id=name.id
+						break
+				data['patient_Info']=person_id
+				# Might need to update this so that it updates more things and only does it if the thing already there is blank
+				update_person = Person.objects.get(id=person_id)
+				update_person.alias=data['alias']
+				update_person.save()
+			if data['day'] != '':
+				data['admitdate'] = data['month']+'/'+data['day']+'/'+data['year']
+			elif data['month'] != '':
+				data['admitdate'] = data['month']+'/'+data['year']
+			elif data['year'] != '':
+				data['admitdate'] = data['year']
+
+			# check to see if there is already a patient entry for this person
+			patient_list = PatientEntry.objects.filter(patient_Info=person_id)
+			for entry in patient_list:
+				month = ""
+				for char in entry.admitdate:
+					if char == '/':
+						break
+					else:
+						month+=char
+				year = ""
+				for char in entry.admitdate[::-1]:
+					if char == '/':
+						break
+					else:
+						year = char+year			
+				#print entry.admitdate
+				#print month,year
+				if data["month"]+data["year"] == month+year:
+					print "Updating entry!"
+					data['id']=patient_list[0].id
+					data['status']=patient_list[0].status
+					data['exitdate']=patient_list[0].exitdate
+					if month != '':
+						data['admitdate']=patient_list[0].admitdate
+					data['weekly_Rate']=patient_list[0].weekly_Rate
+				else:
+					print "making a new entry for this person"
+			if len(patient_list) == 0:
+				print "making a new person"
+			print "Modified data:"
+			print data
+		for field in self.get_fields():
+			#print field
+			field_name = self.get_field_name(field)
+			print field_name
+			print obj.id
+			self.import_field(field, obj, data)
+```
+
+
+
+
 
 
 ```
