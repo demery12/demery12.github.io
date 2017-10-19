@@ -126,7 +126,9 @@ To summarize [here is the diff that best encapsulates my contributions](https://
 
 ## [Ticha]()
 
-Ticha is a linguistics project that focuses on the Colonial Zapotec Language. You can check out [the site](https://ticha.haverford.edu/en/) it's one of my favorites. I didn't contribute to this one as much as the previous, but I did one huge part of it. It was also my crowning achievment in messy code.
+Ticha is a linguistics project that focuses on the Colonial Zapotec Language. You can check out [the site](https://ticha.haverford.edu/en/) it's probably my favorite. I might like it so much because I didn't contribute to this one as much as the previous, but I did have one huge part in it. It was also my crowning achievment in messy code. I present to you [ticha\_magic.py](https://github.com/HCDigitalScholarship/ticha-django-site/blob/3bc7a54edd393495098cfe9657da7775c076df1d/zapotexts/ticha_magic.py). I wouldn't try to read that, it would be a huge waste of time and a real headache to follow, but it basically is an xml parser that, following a lot of specific rules, converts that XML to HTML. My bosses were actually _really_ impressed with this and in fairness it was really hard. But it is just so messy, I don't feel that good about it. The DS student that has done most of this project somewhat tenatively confronted me about updating ticha\_magic.py and making it a lot neater. I think he was worried about stepping on my toes, which I appreciate, but there was also no one in the world that thought it needed to be updated more. I also thought it was a one in done senario where we run this script on our one ridiculously long XML file and then that's it, but apparently that was not the case. With all that being said, it was still a pretty impressive feat. And it worked!
+
+
 
 ```
 
