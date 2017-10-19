@@ -2,7 +2,7 @@
 layout: default
 ---
 
-Hi there! This is a walkthrough of [my GitHub](https://github.com/demery12) as well as some of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship). The main motivation for the creation of this is to aid people considering me for a position since it is almost impossible to get a sense of my contributions to Digital Scholarship without guidance. If you are here for a different reason, I suspect this would be useful to get a sense about what Digital Scholarship does and also who I am.
+Hi there! This is a walkthrough of [my GitHub](https://github.com/demery12) as well as some of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship). The main motivation for the creation of this is to aid people considering me for a position since it is almost impossible to get a sense of my contributions to Digital Scholarship without guidance; since my laptop is only mildly, I did all my work on the public "Wreck Room Computer" and many of the commits under that title are me. If you are here for a different reason, I suspect this would be useful to get a sense about what Digital Scholarship does and also who I am.
 
 We will be looking at:
 - [Digital Scholarship](#digital-scholarship)
@@ -29,8 +29,33 @@ All code at [this point](https://github.com/HCDigitalScholarship/global-terroris
 
 ## [](#bridge)[The Bridge](https://github.com/HCDigitalScholarship/bridge-repo/tree/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b) 
 
-The Bridge is a classical language project the generates and filters vocabulary list. You can check out [a fairly working version](http://bridge.haverford.edu/)! I started working on The Bridge in the Summer of 2016 and it was a _mess_. While I cleaned up some of that mess, I also added to it; this was definitely a big learning experience for me. When I started working on this there was a stupidly complicated procedure for updating the database involving hand manipulation of spreadsheets as well as some scripts. I joined all this together so that the spreadsheet could be updated with a single manage.py command (manage.py is what Django uses for various management purposes, I extended it). I then exented the Django admin site so that the updating process is even easier. The two scripts that do this are [update\_master.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/update_master.py) and [update\_page.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/update_page.py) the latter of which makes use of of [text\_import.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/text_import.py) which was primarly written by another student, but I did have to modify as there were some significant bugs. I would actually categorize most of my work on The Bridge as bug-finding and fixing. The other tangible things I did were in views.py and main.js
+The Bridge is a classical language project the generates and filters vocabulary list. You can check out [a fairly working version](http://bridge.haverford.edu/)! I started working on The Bridge in the Summer of 2016 and it was a _mess_. While I cleaned up some of that mess, I also added to it; this was definitely a big learning experience for me. When I started working on this there was a stupidly complicated procedure for updating the database involving hand manipulation of spreadsheets as well as some scripts. I joined all this together so that the spreadsheet could be updated with a single manage.py command (manage.py is what Django uses for various management purposes, I extended it). I then exented the Django admin site so that the updating process is even easier. The two scripts that do this are [update\_master.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/update_master.py) and [update\_page.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/update_page.py) the latter of which makes use of of [text\_import.py](https://github.com/HCDigitalScholarship/bridge-repo/blob/df7c1e95c50ca762960f151fa5b4d8d1ae3d1f7b/new_bridge/management/commands/text_import.py) which was primarly written by another student, but I did have to modify as there were some significant bugs. I would actually categorize most of my work on The Bridge as bug-finding and fixing. The other tangible things I did were in views.py and main.js. Before I draw your atention to specfics of my contributions I'd like to disclaim that I didn't write most of these files and these files exemplify my claim that The Bridge is a mess. One of the interesting and particurarly sloppy additions is all the "comment this out for production" things. We were running into this mysterious "Too many SQL variables" problem and it was really stumping us. It turns out that you can't make requests that are too big (>100). So you have to chunk your request. I highlight this solution below:
 
+```
+ #COMMENT THIS OUT FOR PRODUCTION
++            #COMMENT vvvvvvvvvvvvvvvvvvvvvv
++            #index = 100
++            vocab_intersection = []
++            #CONSIDER NOT COMMENTINGvvvvvvvvvvvvvvvvvvvvvvvvvv
++            #don't want dups
++            list_word_ids=list(set(list_word_ids))
++            #PROBABLY DON't COMMENT ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++            #while index<len(list_word_ids):
++            #    vocab_intersection.extend(list(word_appearences.objects.filter(read_texts_filter,
++            #            word__in=list_word_ids[index-100:index],text_name=text).values('word')))
++            #    index += 100
++            #vocab_intersection.extend(list(word_appearences.objects.filter(read_texts_filter,
++            #        word__in=list_word_ids[index-100:index],text_name=text).values('word')))
++            #COMMENT ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
+
+
+[Here is the diff that best encapsulates my contributions](https://github.com/HCDigitalScholarship/bridge-repo/compare/e8550975f31005be66fc5837b5c0a2884448a34e...d0b1efa569d8f7e1a2c61e114b0db4038ef6857b). There were some other people working on it, but most changes were me. It also might not actually be that useful, but I'll throw it at you anyway.
+
+
+
+
+https://github.com/HCDigitalScholarship/bridge-repo/compare/e8550975f31005be66fc5837b5c0a2884448a34e...d0b1efa569d8f7e1a2c61e114b0db4038ef6857b#diff-41ba398486ac4eb7fb1400b740cba839
 
 ```
 
