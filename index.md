@@ -2,7 +2,9 @@
 layout: default
 ---
 
-Hi there! This is a primarily a walkthrough of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship). I'll breifly touch on the projects in [my GitHub](https://github.com/demery12) as well. The main motivation for the creation of this is to aid people considering me for a position since it is almost impossible to get a sense of my contributions to Digital Scholarship without guidance; since my laptop is only mildly functional, I did all my work on the public "Wreck Room Computer" and many of the commits under that title are me. I present my code in an honest manner; while I have developed wonderful problem solving skills, and had the oportunity to jump into projects with a good amount of preexisting and messy code, I haven't had the benefit of working on a proper software team with experienced members to guide me. I am eager to continue to improve as a developer!
+Hi there! This is a primarily a walkthrough of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship). If you want to see my other projects, you can take a look at [my GitHub](https://github.com/demery12) my coolest project being [BODL-Service](http://bodl-service.com).
+
+It is almost impossible to get a sense of my contributions to Digital Scholarship without guidance; since my laptop is only mildly functional, I did all my work on the public "Wreck Room Computer" and many of the commits under that title are me. I created this guide hoping to aid anyone (people I linked here from my resume) looking to get a sense of these contributions and take a peek at some code I wrote. I present my code in an honest manner, free of "showcase edits"; while I have developed wonderful problem solving skills, and had the opportunity to jump into projects with a good amount of preexisting and messy code, I haven't had the benefit of working on a proper software team with experienced members to guide me. I am eager to continue to improve as a developer!
 
 We will be looking at:
 - [Digital Scholarship](#digital-scholarship)
@@ -11,29 +13,26 @@ We will be looking at:
   - [Ticha](#ticha)
   - [Beyond Penn's Treaty](#beyond-penns-treaty)
   - [Quakers and Mental Health](#quakers-and-mental-health)
-- BODL-Service
-- img\_exploration
-- CodingChallenges
 
 Let's get started!
 # [](#ds)Digital Scholarship
 
-The term Digital Scholarship refers to the use of technology to aid scholarship. Our Digital Scholarship team focuses less on the actual scholarship and more on the technology side, realizing professors' and students' ideas of what technology can do for them. We are admittedly not an experienced software team, but we try our best to be making use of virtual environments, production servers on Droplet and of course Git for version control. As a team we are still learning and as an individual I certainly have a lot to learn as well. But, having played a role on almost all of our active projects, I at least have some experience learning:
+The term Digital Scholarship refers to the use of technology to aid scholarship. Our Digital Scholarship team focuses less on the actual scholarship and more on the technology side, realizing professors' and students' ideas of what technology can do for them. We are admittedly not an experienced software team, but we try our best to be, making use of virtual environments, production servers on Droplet and of course Git for version control. As a team we are still learning and as an individual I certainly have a lot to learn as well. But, having played a role on almost all of our active projects, I at least have some experience learning:
 
 
 ## [](#gtrp)[Global Terrorism Research Project](https://github.com/HCDigitalScholarship/global-terrorism-research/tree/e135882407ae773a7d216c4d28876d67d08575bd)
 
 The Global Terrorism Research Project (GTRP) is essentially a database of all public statements made by al Qaeda. Researchers have tagged each of these statements with keywords and the context in which a keyword is being used. The [site was originally on Drupal](https://ds-drupal.haverford.edu/aqsi/) and it frankly [doesn't work that well](https://ds-drupal.haverford.edu/aqsi/search/site). I was originally tasked with beginning to convert the site into a Django site and I would then hand off my progress to a summer worker. I made it further than expected and ended up adding search functionality with Whoosh and filtering functionality. [Here in whoosh\_schema.py](https://github.com/HCDigitalScholarship/global-terrorism-research/blob/e135882407ae773a7d216c4d28876d67d08575bd/gtr_site/management/commands/whoosh_schema.py) I build the appropriate search index based off of the [models](https://github.com/HCDigitalScholarship/global-terrorism-research/blob/e135882407ae773a7d216c4d28876d67d08575bd/gtr_site/models.py). In [views.py](https://github.com/HCDigitalScholarship/global-terrorism-research/blob/e135882407ae773a7d216c4d28876d67d08575bd/gtr_site/views.py) the search functions takes a post request and contructs a query for whoosh. Now I _really_ could have made this a bit more modular as I was repeatedly doing the same thing and that's actually something I'm working on now. There is also some basic HTML in the [templates folder](https://github.com/HCDigitalScholarship/global-terrorism-research/tree/e135882407ae773a7d216c4d28876d67d08575bd/gtr_site/templates/gtr_site) that I wrote, but it is nothing particularly exciting.
 
-All code at [this point](https://github.com/HCDigitalScholarship/global-terrorism-research/tree/e135882407ae773a7d216c4d28876d67d08575bd) in the project has been written by me (or automatically generated Django). I have since passed it on to a summer worker, who took a few steps foward and a few steps back, and now I am working on getting search and filtering to work again.
+All code at [this point](https://github.com/HCDigitalScholarship/global-terrorism-research/tree/e135882407ae773a7d216c4d28876d67d08575bd) in the project has been written by me (or automatically generated Django). I have since passed it on to a summer worker, who took a few steps forward and a few steps back, and now I am working on getting search and filtering to work again.
 
 ## [](#bridge)The Bridge 
 
 The Bridge is a classical language project that generates and filters vocabulary list from selected texts. You can check out [a fairly working version](http://bridge.haverford.edu/)! I started working on The Bridge in the Summer of 2016 and it was a _mess_. While I cleaned up some of that mess, I also added to it; this was definitely a big learning experience for me. It's worth noting that I can't directly show you this repository since it is private; the people that generate the data are very protective over it (they may or may not be Belgian monks?!? I was never clear on that point.) I will be able to pull some code snippets, but I want to be as cautious as I can about it. Let's get into the work I did.
 
-When I started working on The Bridge there was a stupidly complicated procedure for updating the database involving hand manipulation of spreadsheets and a couple scripts. I joined all this together so that the spreadsheet could be updated with a single manage.py command (manage.py is what Django uses for various management purposes, I extended it). I then exented the Django admin site so that the updating process is even easier.  The scripts I am referencing here are _somewhat_ revealing of the nature of the data, so I better not show them. They are also not wildly exciting; some csv manipulation, and some calls with Django to update or write data.
+When I started working on The Bridge there was a stupidly complicated procedure for updating the database involving hand manipulation of spreadsheets and a couple scripts. I joined all this together so that the spreadsheet could be updated with a single manage.py command (manage.py is what Django uses for various management purposes, I extended it). I then extended the Django admin site so that the updating process is even easier.  The scripts I am referencing here are _somewhat_ revealing of the nature of the data, so I better not show them. They are also not wildly exciting; some csv manipulation, and some calls with Django to update or write data.
 
-I would actually categorize most of my work on The Bridge as bug-finding and fixing. A paticular bug I got snagged on was a mysterious "Too many SQL variables" problem. It turns out that you can't make requests that are "too big" when you are using SQLite, but it is fine for MySQL. So we had to chunk our requests whenever we were using SQLite. I highlight this solution below:
+I would actually categorize most of my work on The Bridge as bug-finding and fixing. A particular bug I got snagged on was a mysterious "Too many SQL variables" problem. It turns out that you can't make requests that are "too big" when you are using SQLite, but it is fine for MySQL. So we had to chunk our requests whenever we were using SQLite. I highlight this solution below:
 
 ```
  #COMMENT THIS OUT FOR PRODUCTION
@@ -123,19 +122,19 @@ function filterWordData(pos_list) {
 }
 ```
 
-This was a more recent fix, so it is better commentented and coded, but that's not the reason I'm proud of it. Hopefully I've whined enough that you have an idea about how tricky The Bridge codebase was to navigate. I was able to find an fix this error when the only symptom was a couple words not appearing and that is what I am proud of.
+This was a more recent fix, so it is better commented and coded, but that's not the reason I'm proud of it. Hopefully I've whined enough that you have an idea about how tricky The Bridge codebase was to navigate. I was able to find and fix this error when the only symptom was a couple words not appearing and that is what I am proud of.
 
 ## Ticha
 
-Ticha is a linguistics project that focuses on the Colonial Zapotec Language. You can check out [the site](https://ticha.haverford.edu/en/) it's probably my favorite. I might like it so much because I didn't contribute to this one as much as the previous, so I am less aware of its flaws. I did have one huge part in this project and it was also my crowning achievment in messy code. I called it ticha\_magic as it takes a big sloppy XML file and (in a big sloppy way) turns it into nice clean HTML, filled with hyperlinks and meaningful paragraphs, headers and page breaks. I again cannot directly show you the code because the repository is private; the code boils down to a bunch of conditionals tracking the opening and closing of tags, building up HTML in the process and erroring if there was some bad XML. There were a bunch of corner cases and errors in the XML making this process a lot more complex than it may seem. My bosses were  _really_ impressed with this and in fairness it was really hard. But it is just so messy, I don't feel that good about it. The DS student that has done most of this project somewhat tenatively confronted me about updating ticha\_magic.py and making it a lot neater. I think he was worried about stepping on my toes, which I appreciate, but there was also no one in the world that thought it needed to be updated more. The name stuck though!
+Ticha is a linguistics project that focuses on the Colonial Zapotec Language. You can check out [the site](https://ticha.haverford.edu/en/) it's probably my favorite. I might like it so much because I didn't contribute to this one as much as the previous, so I am less aware of its flaws. I did have one huge part in this project and it was also my crowning achievement in messy code. I called it ticha\_magic as it takes a big sloppy XML file and (in a big sloppy way) turns it into nice clean HTML, filled with hyperlinks and meaningful paragraphs, headers and page breaks. I again cannot directly show you the code because the repository is private; the code boils down to a bunch of conditionals tracking the opening and closing of tags, building up HTML in the process and erroring if there was some bad XML. There were a bunch of corner cases and errors in the XML making this process a lot more complex than it may seem. My bosses were  _really_ impressed with this and in fairness it was really hard. But it is just so messy, I don't feel that good about it. The DS student that has done most of this project somewhat tentatively confronted me about updating ticha\_magic.py and making it a lot neater. I think he was worried about stepping on my toes, which I appreciate, but there was also no one in the world that thought it needed to be updated more. The name stuck though!
 
 ## [Beyond Penn's Treaty](https://github.com/HCDigitalScholarship/QI)
 
-[Beyond Penn's Treaty](https://pennstreaty.haverford.edu/) was the first project I really worked on and the first time I made a Django importer. That one took me way longer than it does now. We were trying to use a plugin that wasn't working which it turns out is much more difficult to resolve than just writing your own importer. This was also my first time working with Django and I remember having some trouble setting up relational fields in the database (well really in models with Django).  I'll link the repository and here is [a big commit](https://github.com/HCDigitalScholarship/QI/commit/83f5b5508bc8865e4656a0f4aa242ff08eb90bd0) from me. These are both things you can probably skip, at this point I am just shooting for completeness, but if you do look at that big commit, you can see in admin.py all the importing stuff I did (in a really bad way), and generate.py is another parser I wrote, this one a little tidier and much simpler, also converting XML to HTML, and again more converting in new\_XML\_to\_HTML.py (I didn't fully write this one, but I made a lot of changes/got it properly working).
+[Beyond Penn's Treaty](https://pennstreaty.haverford.edu/) was the first project I really worked on and the first time I made a Django importer. That one took me way longer than it does now. We were trying to use a plugin that wasn't working and in hindsight trying to wiggle that to work for us was much more difficult than it would have been to write my own importer. This was also my first time working with Django and I remember having some trouble setting up relational fields in the database (well really in models with Django).  I'll link the repository and here is [a big commit](https://github.com/HCDigitalScholarship/QI/commit/83f5b5508bc8865e4656a0f4aa242ff08eb90bd0) from me. These are both things you can probably skip, at this point I am just shooting for completeness, but if you do look at that big commit, you can see in admin.py all the importing stuff I did (in a really bad way), and generate.py and new\_XML\_to\_HTML.py  are other parser I wrote, these being _a little_ tidier and much simpler than ticha\_magic, still converting XML to HTML (I didn't fully write the second one, but I made a lot of changes/got it properly working)
 
 ## [Quakers and Mental Health]
 
-I _thought_ my greatest contribution to this project was getting rid of a carousel but [apparently that change didn't stick](http://qmh.haverford.edu/occu/#row10). I also made an importer, as I will do, and really tidied up the way the Django admin was looking, by changing the way models were displayed and adding some built in django filtering features. For this importer I was mostly able to get things working with the Django-import-export module, but there was one model I had to do a workaround for. This is for the field "Patient Entry" which needs to link to a patient foreign key, but sometimes there were brand new people in the patient entry spread sheet. If I recall correctly, there were also tons of repeated entries with some having more information than others. I used date to distinguish entries for the same person, and then took the one with the most information. The repository is private (probably for copy-righted data reasons), but I can share the code snippet I am referencing:
+I _thought_ my greatest contribution to this project was getting rid of a carousel but [apparently that change didn't stick](http://qmh.haverford.edu/occu/#row10). I also made an importer, as I will do, and really tidied up the way the Django admin was looking, by changing the way models were displayed and adding some built in django filtering features. For this importer I was mostly able to get things working with the Django-import-export module, but there was one model I had to do a workaround for. This is for the field "Patient Entry" which needs to link to a patient foreign key, but sometimes there were brand new people in the patient entry spread sheet. If I recall correctly, there were also tons of repeated entries with some having more information than others. I used date to distinguish entries for the same person, and then took the one with the most information. The repository is again private, but I can share the code snippet I am referencing, in case you are still looking for more code I wrote:
 
 ```
 def import_obj(self, obj, data, dry_run):
@@ -233,89 +232,3 @@ def import_obj(self, obj, data, dry_run):
 
 
 
-```
-
-#### [](#header-4)Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### [](#header-5)Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### [](#header-6)Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
-```
