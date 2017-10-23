@@ -2,9 +2,9 @@
 layout: default
 ---
 
-Hi there! This is a primarily a walkthrough of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship). If you want to see my other projects, you can take a look at [my GitHub](https://github.com/demery12) my coolest project being [BODL-Service](http://bodl-service.com).
+Hi there! This is primarily a walkthrough of the work I have done with [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship). If you want to see my other projects, you can take a look at [my GitHub](https://github.com/demery12), my coolest project being [BODL-Service](http://bodl-service.com).
 
-It is almost impossible to get a sense of my contributions to Digital Scholarship without guidance; since my laptop is only mildly functional, I did all my work on the public "Wreck Room Computer" and many of the commits under that title are me. I created this guide hoping to aid anyone (people I linked here from my resume) looking to get a sense of these contributions and take a peek at some code I wrote. I present my code in an honest manner, free of "showcase edits"; while I have developed wonderful problem solving skills, and had the opportunity to jump into projects with a good amount of preexisting and messy code, I haven't had the benefit of working on a proper software team with experienced members to guide me. I am eager to continue to improve as a developer!
+It is almost impossible to get a sense of my contributions to Digital Scholarship without guidance; since my laptop is only mildly functional, I did all my work on the public "Wreck Room Computer" and many of the commits under that title are me. I created this guide hoping to aid anyone (people I linked here from my resume) looking to get a sense of these contributions and take a peek at some code I wrote. I present my code in an honest manner, free of "showcase edits"; while I have developed wonderful problem solving skills, and had the opportunity to jump into projects with a good amount of preexisting (and messy) code, I haven't had the benefit of working on a proper software team with experienced members to guide me. I am eager to continue to improve as a developer!
 
 We will be looking at:
 - [Digital Scholarship](#digital-scholarship)
